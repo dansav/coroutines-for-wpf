@@ -1,3 +1,6 @@
 bin/
 obj/
 .vs/
+stage/
+/tools/*
+!/tools/packages.config

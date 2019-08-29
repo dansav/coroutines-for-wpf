@@ -41,6 +41,9 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="..\..\stage\AssemblyVersion.generated.cs">
+      <Link>Properties\AssemblyVersion.generated.cs</Link>
+    </Compile>
     <Compile Include="CoroutineBase.cs" />
     <Compile Include="Executor.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -48,5 +51,9 @@
     <Compile Include="WaitUntil.cs" />
     <Compile Include="WaitWhile.cs" />
   </ItemGroup>
+  <PropertyGroup>
+    <PreBuildEvent>if not exist $(SolutionDir)..\stage mkdir $(SolutionDir)..\stage
+if not exist $(SolutionDir)..\stage\AssemblyVersion.generated.cs echo using System.Reflection; [assembly: AssemblyVersion("0.0.1.0")] [assembly: AssemblyFileVersion("0.0.1.0")] &gt; $(SolutionDir)..\stage\AssemblyVersion.generated.cs</PreBuildEvent>
+  </PropertyGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
