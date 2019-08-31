@@ -4,7 +4,12 @@
 # https://aka.ms/yaml
 
 trigger:
-- master
+  batch: true
+  branches:
+    include:
+    - master
+    - develop
+    - release/*
 
 pool:
   vmImage: 'windows-2019'
