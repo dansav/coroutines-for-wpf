@@ -1,17 +1,9 @@
 ﻿using System;
 using System.Collections;
-using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
 using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
 using System.Windows.Shapes;
 
 namespace CoroutinesForWpf
@@ -22,10 +14,14 @@ namespace CoroutinesForWpf
     public partial class MainWindow : Window
     {
         private const double StepSize = 40;
+        private const int StepCount = 6; // must be even
+        private const int MiddleStep = StepCount / 2;
+
+        private readonly Ellipse _ball;
+        private readonly Step[] _steps;
+        private readonly BallAnimation _ballAnimation;
 
         private Point _center;
-        private Ellipse _ball;
-        private Step[] _steps;
         private Point _start;
 
         public MainWindow()
@@ -35,7 +31,9 @@ namespace CoroutinesForWpf
             SizeChanged += OnSizeChanged;
 
             _ball = new Ellipse { Width = 20, Height = 20, Stroke = Brushes.Black, StrokeThickness = 2 };
-            _steps = Enumerable.Range(0, 4).Select(_ => new Step(StepSize)).ToArray();
+            _steps = Enumerable.Range(0, StepCount).Select(_ => new Step(StepSize, StepSize * StepCount)).ToArray();
+
+            _ballAnimation = new BallAnimation(_ball, StepSize);
         }
 
         private void OnSizeChanged(object sender, SizeChangedEventArgs e)
@@ -54,104 +52,57 @@ namespace CoroutinesForWpf
 
             Initialize();
 
-            Executor.StartCoroutine(RunAnimation());
+            Executor.StartCoroutine(StairsAnimation());
+            Executor.StartCoroutine(_ballAnimation);
         }
 
         private void Initialize()
         {
-            _center = new Point(Scene.ActualWidth / 2, Scene.ActualHeight / 2);
-            _start = _center + new Vector(-2 * StepSize, -2 * StepSize);
+            _center = new Point(Math.Round(Scene.ActualWidth / 2), Math.Round(Scene.ActualHeight / 2));
+            _start = _center + new Vector(-MiddleStep * StepSize, -MiddleStep * StepSize);
 
             foreach (UIElement sceneChild in Scene.Children)
             {
                 Canvas.SetLeft(sceneChild, 0);
                 Canvas.SetTop(sceneChild, 0);
             }
+
+            _ballAnimation.Center = _center;
         }
 
-        private IEnumerator RunAnimation()
+        private IEnumerator StairsAnimation()
         {
-            yield return BuildStairsAndDropBall();
-            yield return RunStairsAndBounceBall();
+            yield return BuildStairs();
+            yield return RunStairs();
         }
 
-        private IEnumerator BuildStairsAndDropBall()
+        private IEnumerator BuildStairs()
         {
-            Canvas.SetLeft(_ball, _center.X + 10);
-
-            var ballDropDistance = _center.Y + 20;
-            var dropStep = ballDropDistance / (4 * StepSize);
-            var ballY = 0d;
-            Canvas.SetTop(_ball, ballY);
-
-            while (_steps[0].Position.X < _start.X + 4 * StepSize)
+            while (_steps[0].Position.X < _start.X + StepCount * StepSize - 1)
             {
                 for (int i = 0; i < _steps.Length; i++)
                 {
-                    if (i == 0 || _steps[i - 1].Position.X > _start.X + StepSize)
+                    if (i == 0 || _steps[i - 1].Position.X >= _start.X + StepSize)
                     {
                         _steps[i].Update(_start, true);
                     }
                 }
 
-                ballY += dropStep;
-                Canvas.SetTop(_ball, ballY);
-
+                _ballAnimation.Continue = _steps[MiddleStep].Position.X >= _start.X + StepSize;
                 yield return null;
             }
         }
 
-        private IEnumerator RunStairsAndBounceBall()
+        private IEnumerator RunStairs()
         {
-            double x = 0;
             while (true)
             {
-                for (int i = 0; i < _steps.Length; i++)
+                foreach (var step in _steps)
                 {
-                    _steps[i].Update(_start, true);
+                    step.Update(_start, true);
                 }
-
-                Canvas.SetTop(_ball, _center.Y + 17 - 2 * StepSize * Math.Abs(Math.Sin(Math.PI * x / StepSize)));
-
-                x += 1;
                 yield return null;
             }
-        }
-    }
-
-    public class Step
-    {
-        private readonly double _size;
-
-        private double i;
-
-        public Step(double size)
-        {
-            _size = size;
-            Horizontal = new Line { X1 = -_size, X2 = 0, Stroke = Brushes.Black, StrokeThickness = 1, Visibility = Visibility.Collapsed };
-            Vertical = new Line { Y1 = 0, Y2 = _size, Stroke = Brushes.Black, StrokeThickness = 1, Visibility = Visibility.Collapsed };
-        }
-
-        public Line Horizontal { get; }
-        public Line Vertical { get; }
-
-        public Point Position => new Point(Canvas.GetLeft(Vertical), Canvas.GetTop(Vertical));
-
-        public void Update(Point p, bool visible)
-        {
-            if (i > _size * 4) i = 0;
-
-            var pp = p + new Vector(i, i);
-
-
-            Horizontal.Visibility = visible ? Visibility.Visible : Visibility.Collapsed;
-            Vertical.Visibility = Horizontal.Visibility;
-            Canvas.SetLeft(Horizontal, pp.X);
-            Canvas.SetTop(Horizontal, pp.Y);
-            Canvas.SetLeft(Vertical, pp.X);
-            Canvas.SetTop(Vertical, pp.Y);
-
-            i += 1;
         }
     }
 }

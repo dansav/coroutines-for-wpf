@@ -46,10 +46,12 @@
     </Compile>
     <Compile Include="CoroutineBase.cs" />
     <Compile Include="Executor.cs" />
+    <Compile Include="IPump.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="WaitForSeconds.cs" />
     <Compile Include="WaitUntil.cs" />
     <Compile Include="WaitWhile.cs" />
+    <Compile Include="WpfEventPump.cs" />
   </ItemGroup>
   <PropertyGroup>
     <PreBuildEvent>if not exist $(SolutionDir)..\stage mkdir $(SolutionDir)..\stage
