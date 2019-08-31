@@ -126,10 +126,28 @@ Task("Package").Does(() =>
 });
 
 Task("Publish")
-   .WithCriteria(() => version.BranchName == "master" && !BuildSystem.IsLocalBuild && !BuildSystem.IsPullRequest)
+   .WithCriteria(() => (version.BranchName == "master" || version.BranchName.StartsWith("release/")) && !BuildSystem.IsLocalBuild && !BuildSystem.IsPullRequest)
    .Does(() => 
 {
+   var feedUrl = "https://api.nuget.org/v3/index.json";
+   var package = GetFiles($"{publishDir}/*{version.NuGetVersion}.nupkg").First();
    
+   if (string.IsNullOrWhitespace(EnvironmentVariable("NUGET_API_KEY")))
+   {
+      Information($"Not Pushing the nuget package. Api key is missing!");
+   }
+   else
+   {
+      Information($"Pushing {package} to {feedUrl}");
+
+      var settings = new NuGetPushSettings
+      {
+         Source = feedUrl,
+         ApiKey = EnvironmentVariable("NUGET_API_KEY")
+      };
+
+      NuGetPush(package, settings);
+   }
 });
 
 Task("Default")
@@ -138,7 +156,7 @@ Task("Default")
    .IsDependentOn("Build")
    //.IsDependentOn("Test")
    .IsDependentOn("Package")
-   //.IsDependentOn("Publish")
+   .IsDependentOn("Publish")
    ;
 
 RunTarget(target);
