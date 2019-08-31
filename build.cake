@@ -132,7 +132,7 @@ Task("Publish")
    var feedUrl = "https://api.nuget.org/v3/index.json";
    var package = GetFiles($"{publishDir}/*{version.NuGetVersion}.nupkg").First();
    
-   if (string.IsNullOrWhitespace(EnvironmentVariable("NUGET_API_KEY")))
+   if (string.IsNullOrWhiteSpace(EnvironmentVariable("NUGET_API_KEY")))
    {
       Information($"Not Pushing the nuget package. Api key is missing!");
    }
