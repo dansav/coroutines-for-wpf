@@ -1,62 +1,73 @@
 ﻿using System;
 using System.Collections;
-using System.Windows.Media;
 
 namespace CoroutinesForWpf
 {
     public static class Executor
     {
+        private static IPump _pump = new WpfEventPump();
+
         public static IDisposable StartCoroutine(IEnumerator routine)
         {
-            return new Runner(routine);
+            return new Runner(_pump, routine);
+        }
+
+        public static void AssignEventPump(IPump pump)
+        {
+            _pump?.Dispose();
+            _pump = pump;
         }
 
         private class Runner : IDisposable
         {
+            private readonly IPump _pump;
+
             private Routine _routine;
 
-            public Runner(IEnumerator routine)
+            public Runner(IPump pump, IEnumerator routine)
             {
+                _pump = pump;
                 _routine = new Routine(routine);
-                CompositionTarget.Rendering += Pump;
+                _pump.NextFrame += OnNextFrame;
             }
 
             public void Dispose()
             {
-                CompositionTarget.Rendering -= Pump;
+                _pump.NextFrame -= OnNextFrame;
             }
 
-            private void Pump(object sender, EventArgs eventArgs)
+            private void OnNextFrame()
             {
-                if (_routine.Value.MoveNext())
+                if (_routine.Enumerator.MoveNext())
                 {
-                    if (_routine.Value.Current is IEnumerator e)
+                    if (_routine.Enumerator.Current is IEnumerator e)
                     {
                         _routine = new Routine(e, _routine);
+                        OnNextFrame();
                     }
                 }
                 else if (_routine.Parent != null)
                 {
                     _routine = _routine.Parent;
-                    Pump(sender, eventArgs);
+                    OnNextFrame();
                 }
                 else
                 {
-                    CompositionTarget.Rendering -= Pump;
+                    _pump.NextFrame -= OnNextFrame;
                 }
             }
         }
 
         private class Routine
         {
-            public Routine(IEnumerator value, Routine parent = null)
+            public Routine(IEnumerator enumerator, Routine parent = null)
             {
-                Value = value;
+                Enumerator = enumerator;
                 Parent = parent;
             }
 
             public Routine Parent { get; }
-            public IEnumerator Value { get; }
+            public IEnumerator Enumerator { get; }
         }
     }
 }

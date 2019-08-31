@@ -5,7 +5,7 @@ namespace CoroutinesForWpf
 {
     public abstract class CoroutineBase : IEnumerator
     {
-        public object Current { get; } = null;
+        public virtual object Current { get; } = null;
 
         public abstract bool MoveNext();
 
