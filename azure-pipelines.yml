@@ -17,3 +17,7 @@ pool:
 steps:
 - powershell: ./build.ps1
   displayName: 'Run Cake Build Script'
+  env:
+    NUGET_API_KEY: $(dansav.NugetApiKey)
+- publish: $(System.DefaultWorkingDirectory)/stage
+  artifact: Stage
