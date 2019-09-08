@@ -24,8 +24,14 @@ namespace CoroutinesForWpf
             // naive solution for skipping frames if previous execution takes to long
             if (_busy) return;
             _busy = true;
-            NextFrame?.Invoke();
-            _busy = false;
+            try
+            {
+                NextFrame?.Invoke();
+            }
+            finally
+            {
+                _busy = false;
+            }
         }
     }
 }

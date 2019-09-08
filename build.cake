@@ -89,7 +89,7 @@ Task("Build").Does(() =>
 
 Task("Test").Does(() =>
 {
-    NUnit3("./source/**/bin/Release/*.Tests.dll", new NUnit3Settings
+    NUnit3($"./source/**/bin/{configuration}/*.Tests.dll", new NUnit3Settings
     {
         //X86 = true,
         Results = new[]
@@ -150,7 +150,7 @@ Task("Default")
     .IsDependentOn("Restore")
     .IsDependentOn("PreBuild")
     .IsDependentOn("Build")
-    //.IsDependentOn("Test")
+    .IsDependentOn("Test")
     .IsDependentOn("Package")
     .IsDependentOn("Publish")
     ;
