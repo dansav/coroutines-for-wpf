@@ -4,9 +4,25 @@
 
 Influenced by coroutines in Unity. Giving the ability to sequentially declare animations and other time dependent tasks.
 
-Currently the coroutines are run on the main thread.
+Example code:
 
-TODO:
-- [ ] Handle multiple coroutines running simultaneously
-- [ ] Handle code that runs for longer than one frame
-- [ ] ...
+```C#
+private void OnClick()
+{
+    var routine = Executor.StartCoroutine(GreetTheWorld());
+
+    // To abort the coroutine, just call Dispose()
+    //routine.Dispose();
+}
+
+private IEnumerator GreetTheWorld()
+{
+    TextBlock1.Text = "Hello ...";
+
+    yield return new WaitForSeconds(2.0);
+
+    TextBlock1.Text = "Hello World!";
+}
+```
+
+More example code can be found in the source code. Main example: [CoroutinesForWpf.Example](Source/CoroutinesForWpf.Example/)

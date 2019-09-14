@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 
 namespace CoroutinesForWpf
 {
@@ -13,7 +13,7 @@ namespace CoroutinesForWpf
 
         public override bool MoveNext()
         {
-            return !_predicate();
+            return _predicate() == false;
         }
     }
 }

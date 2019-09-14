@@ -12,6 +12,7 @@
     <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <Deterministic>true</Deterministic>
+    <TargetFrameworkProfile />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -21,6 +22,7 @@
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+    <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
@@ -29,6 +31,7 @@
     <DefineConstants>TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+    <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="PresentationCore" />
@@ -44,8 +47,10 @@
     <Compile Include="..\..\stage\AssemblyVersion.generated.cs">
       <Link>Properties\AssemblyVersion.generated.cs</Link>
     </Compile>
+    <Compile Include="Coroutine.static.cs" />
+    <Compile Include="Coroutine.cs" />
     <Compile Include="CoroutineBase.cs" />
-    <Compile Include="Executor.cs" />
+    <Compile Include="Explore.cs" />
     <Compile Include="IPump.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="WaitForSeconds.cs" />
