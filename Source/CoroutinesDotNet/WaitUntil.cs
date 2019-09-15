@@ -1,19 +1,19 @@
-﻿using System;
+using System;
 
-namespace CoroutinesForWpf
+namespace CoroutinesDotNet
 {
-    public class WaitWhile : CoroutineBase
+    public class WaitUntil : CoroutineBase
     {
         private readonly Func<bool> _predicate;
 
-        public WaitWhile(Func<bool> predicate)
+        public WaitUntil(Func<bool> predicate)
         {
             _predicate = predicate;
         }
 
         public override bool MoveNext()
         {
-            return _predicate();
+            return _predicate() == false;
         }
     }
 }

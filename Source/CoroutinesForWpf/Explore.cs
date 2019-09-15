@@ -3,9 +3,9 @@ using System.Collections;
 
 namespace CoroutinesForWpf
 {
-    public class Explore
+    internal class Explore
     {
-        public void Api()
+        internal void Api()
         {
             // 1.
             var x = Coroutine.Start(DoSomething());
@@ -23,33 +23,6 @@ namespace CoroutinesForWpf
         private IEnumerator DoSomething()
         {
             yield return null;
-        }
-    }
-
-
-    public static class Start
-    {
-        public static IDisposable Coroutine(IEnumerator routine)
-        {
-            return CoroutinesForWpf.Coroutine.Start(routine);
-        }
-    }
-
-    // for backwards compatibility
-    public static class Executor
-    {
-        [Obsolete]
-        public static IDisposable StartCoroutine(IEnumerator routine)
-        {
-            return Coroutine.Start(routine);
-        }
-    }
-
-    public static class EnumeratorExtensions
-    {
-        public static IDisposable Start(this IEnumerator routine)
-        {
-            return Coroutine.Start(routine);
         }
     }
 }

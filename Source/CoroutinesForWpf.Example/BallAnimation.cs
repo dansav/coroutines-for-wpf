@@ -1,10 +1,11 @@
-﻿using System;
+using System;
 using System.Collections;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Shapes;
+using CoroutinesDotNet;
 
-namespace CoroutinesForWpf
+namespace CoroutinesForWpf.Example
 {
     public class BallAnimation : CoroutineBase
     {

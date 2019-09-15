@@ -1,19 +1,18 @@
-﻿using System.Collections;
+using System.Collections;
 using NUnit.Framework;
 
-namespace CoroutinesForWpf.Tests
+namespace CoroutinesDotNet.Tests
 {
-    public class ExecutorTests
+    public class CoroutineRunnerTests
     {
         [Test]
-        public void Executor_BeforePumpAdvances_NoFrameIsExecuted()
+        public void CoroutineRunner_BeforePumpAdvances_NoFrameIsExecuted()
         {
             var pump = new TestPump();
-            Executor.AssignEventPump(pump);
 
             int i = 0;
 
-            Executor.StartCoroutine(TestRoutine());
+            var runner = new CoroutineRunner(TestRoutine(), pump);
 
             Assert.That(i, Is.EqualTo(0));
 
@@ -25,14 +24,13 @@ namespace CoroutinesForWpf.Tests
         }
 
         [Test]
-        public void Executor_WhenPumpAdvances_NextFrameIsExecuted()
+        public void CoroutineRunner_WhenPumpAdvances_NextFrameIsExecuted()
         {
             var pump = new TestPump();
-            Executor.AssignEventPump(pump);
 
             int i = 0;
 
-            Executor.StartCoroutine(TestRoutine());
+            var runner = new CoroutineRunner(TestRoutine(), pump);
 
             pump.Advance();
             Assert.That(i, Is.EqualTo(1));

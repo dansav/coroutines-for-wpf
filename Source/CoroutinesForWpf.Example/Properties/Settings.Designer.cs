@@ -8,7 +8,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace CoroutinesForWpf.Example.Properties {
+namespace CoroutinesDotNet.Example.Properties {
     
     
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]

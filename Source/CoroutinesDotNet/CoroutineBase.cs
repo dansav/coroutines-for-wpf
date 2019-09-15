@@ -1,7 +1,7 @@
-﻿using System;
+using System;
 using System.Collections;
 
-namespace CoroutinesForWpf
+namespace CoroutinesDotNet
 {
     public abstract class CoroutineBase : IEnumerator
     {

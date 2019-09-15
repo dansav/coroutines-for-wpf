@@ -1,61 +1,48 @@
 using System;
 using System.Collections;
+using CoroutinesDotNet;
 
 namespace CoroutinesForWpf
 {
-    public partial class Coroutine : IDisposable
+    public class Coroutine
     {
-        private readonly IPump _pumpInstance;
+        private static IPump _pump = new WpfEventPump();
 
-        private EnumeratorNode _currentNode;
-
-        private Coroutine(IEnumerator routine, IPump pump = null)
+        public static IDisposable Start(IEnumerator routine)
         {
-            _pumpInstance = pump ?? _pump;
-            _currentNode = new EnumeratorNode(routine);
-            _pumpInstance.NextFrame += OnNextFrame;
+            return new CoroutineRunner(routine, _pump);
         }
 
-        public void Dispose()
+        public static void AssignEventPump(IPump pump)
         {
-            _pumpInstance.NextFrame -= OnNextFrame;
+            _pump?.Dispose();
+            _pump = pump;
         }
+    }
 
-        private void OnNextFrame()
+    public static class Start
+    {
+        public static IDisposable Coroutine(IEnumerator routine)
         {
-            if (_currentNode.MoveNext())
-            {
-                if (_currentNode.Current is IEnumerator e)
-                {
-                    _currentNode = new EnumeratorNode(e, _currentNode);
-                    OnNextFrame();
-                }
-            }
-            else if (_currentNode.Parent != null)
-            {
-                _currentNode = _currentNode.Parent;
-                OnNextFrame();
-            }
-            else
-            {
-                _pumpInstance.NextFrame -= OnNextFrame;
-            }
+            return CoroutinesForWpf.Coroutine.Start(routine);
         }
+    }
 
-        private class EnumeratorNode
+    // for backwards compatibility
+    public static class Executor
+    {
+        [Obsolete]
+        public static IDisposable StartCoroutine(IEnumerator routine)
         {
-            private readonly IEnumerator _enumerator;
-            public EnumeratorNode(IEnumerator enumerator, EnumeratorNode parent = null)
-            {
-                _enumerator = enumerator;
-                Parent = parent;
-            }
+            return Coroutine.Start(routine);
+        }
+    }
 
-            public EnumeratorNode Parent { get; }
-
-            public object Current => _enumerator.Current;
-
-            public bool MoveNext() => _enumerator.MoveNext();
+    public static class EnumeratorExtensions
+    {
+        public static IDisposable Start(this IEnumerator routine)
+        {
+            return Coroutine.Start(routine);
         }
     }
 }
