@@ -31,7 +31,7 @@ namespace CoroutinesDotNet.CustomPumpExample
                     }
                     else
                     {
-                        yield return new WaitForSeconds(0.8);
+                        yield return new WaitFor(TimeSpan.FromMilliseconds(900));
                         Console.CursorLeft = 0;
                         Console.WriteLine(texts[i]);
                         yield return new WaitForSeconds(1);

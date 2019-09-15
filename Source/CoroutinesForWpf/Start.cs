@@ -4,11 +4,11 @@ using CoroutinesDotNet;
 
 namespace CoroutinesForWpf
 {
-    public class Coroutine
+    public static class Start
     {
         private static IPump _pump = new WpfEventPump();
 
-        public static IDisposable Start(IEnumerator routine)
+        public static IDisposable Coroutine(IEnumerator routine)
         {
             return new CoroutineRunner(routine, _pump);
         }
@@ -20,11 +20,21 @@ namespace CoroutinesForWpf
         }
     }
 
-    public static class Start
+    // alternative public api 1.
+    public static class Coroutine
     {
-        public static IDisposable Coroutine(IEnumerator routine)
+        public static IDisposable Start(IEnumerator routine)
         {
-            return CoroutinesForWpf.Coroutine.Start(routine);
+            return CoroutinesForWpf.Start.Coroutine(routine);
+        }
+    }
+
+    // alternative public api 2.
+    public static class Wpf
+    {
+        public static IDisposable StartCoroutine(IEnumerator routine)
+        {
+            return Start.Coroutine(routine);
         }
     }
 
@@ -34,7 +44,7 @@ namespace CoroutinesForWpf
         [Obsolete]
         public static IDisposable StartCoroutine(IEnumerator routine)
         {
-            return Coroutine.Start(routine);
+            return Start.Coroutine(routine);
         }
     }
 
@@ -42,7 +52,7 @@ namespace CoroutinesForWpf
     {
         public static IDisposable Start(this IEnumerator routine)
         {
-            return Coroutine.Start(routine);
+            return CoroutinesForWpf.Start.Coroutine(routine);
         }
     }
 }

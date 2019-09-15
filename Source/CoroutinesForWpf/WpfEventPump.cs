@@ -10,6 +10,7 @@ namespace CoroutinesForWpf
 
         public WpfEventPump()
         {
+            // todo: should probably only subscribe to this event if there is at least one coroutine running
             CompositionTarget.Rendering += DispatchNextFrame;
         }
 
