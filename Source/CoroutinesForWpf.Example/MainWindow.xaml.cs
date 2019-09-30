@@ -52,8 +52,8 @@ namespace CoroutinesForWpf.Example
 
             Initialize();
 
-            Start.Coroutine(StairsAnimation());
-            Start.Coroutine(_ballAnimation);
+            Coroutine.Start(StairsAnimation());
+            Coroutine.Start(_ballAnimation);
         }
 
         private void Initialize()

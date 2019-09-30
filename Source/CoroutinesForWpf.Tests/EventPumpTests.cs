@@ -1,7 +1,6 @@
-using CoroutinesForWpf;
 using NUnit.Framework;
 
-namespace CoroutinesDotNet.Tests
+namespace CoroutinesForWpf.Tests
 {
     public class CoroutineTests
     {

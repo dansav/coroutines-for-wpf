@@ -1,6 +1,7 @@
 using System;
+using CoroutinesDotNet;
 
-namespace CoroutinesDotNet.Tests
+namespace CoroutinesForWpf.Tests
 {
     public class TestPump : IPump
     {

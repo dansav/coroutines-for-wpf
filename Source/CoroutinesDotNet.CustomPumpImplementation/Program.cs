@@ -11,7 +11,7 @@ namespace CoroutinesDotNet.CustomPumpExample
             Console.WriteLine("Press enter to exit...");
             Console.WriteLine();
 
-            var routine = Start.Coroutine(AnimateText());
+            var routine = CustomCoroutine.Start(AnimateText());
 
             Console.ReadLine();
             routine.Dispose();
