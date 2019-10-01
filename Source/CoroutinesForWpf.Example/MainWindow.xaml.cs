@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections;
 using System.Linq;
 using System.Windows;
@@ -6,7 +6,7 @@ using System.Windows.Controls;
 using System.Windows.Media;
 using System.Windows.Shapes;
 
-namespace CoroutinesForWpf
+namespace CoroutinesForWpf.Example
 {
     /// <summary>
     /// Interaction logic for MainWindow.xaml
@@ -52,8 +52,8 @@ namespace CoroutinesForWpf
 
             Initialize();
 
-            Executor.StartCoroutine(StairsAnimation());
-            Executor.StartCoroutine(_ballAnimation);
+            Coroutine.Start(StairsAnimation());
+            Coroutine.Start(_ballAnimation);
         }
 
         private void Initialize()

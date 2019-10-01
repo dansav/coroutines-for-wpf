@@ -1,7 +1,7 @@
-﻿using System.Windows;
+using System.Windows;
 using System.Windows.Controls;
 
-namespace CoroutinesForWpf
+namespace CoroutinesForWpf.Example
 {
     public static class UIElementExtensions
     {

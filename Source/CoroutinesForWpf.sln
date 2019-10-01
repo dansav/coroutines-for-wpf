@@ -7,6 +7,18 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CoroutinesForWpf.Example", 
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CoroutinesForWpf", "CoroutinesForWpf\CoroutinesForWpf.csproj", "{ECA68B1A-6136-4031-8EB8-06D345EA8C64}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CoroutinesForWpf.Tests", "CoroutinesForWpf.Tests\CoroutinesForWpf.Tests.csproj", "{A8DCB2F2-EFE9-4E62-86A5-B199AD9C5058}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CoroutinesDotNet", "CoroutinesDotNet\CoroutinesDotNet.csproj", "{C35A4EC2-D5E9-4563-BD4A-ED1E2342069D}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tests", "Tests", "{1581DDC8-A59D-41B9-9F5C-0FE9CF20CED2}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CoroutinesDotNet.Tests", "CoroutinesDotNet.Tests\CoroutinesDotNet.Tests.csproj", "{81670681-0FFC-43AA-A99A-3F83583DF665}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Examples", "Examples", "{A1965262-A00F-4008-A426-00A270DC312F}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CoroutinesDotNet.CustomPumpExample", "CoroutinesDotNet.CustomPumpExample\CoroutinesDotNet.CustomPumpExample.csproj", "{FD6A73D1-6845-40F8-A740-46D825F14335}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -21,9 +33,31 @@ Global
 		{ECA68B1A-6136-4031-8EB8-06D345EA8C64}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{ECA68B1A-6136-4031-8EB8-06D345EA8C64}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{ECA68B1A-6136-4031-8EB8-06D345EA8C64}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A8DCB2F2-EFE9-4E62-86A5-B199AD9C5058}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A8DCB2F2-EFE9-4E62-86A5-B199AD9C5058}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A8DCB2F2-EFE9-4E62-86A5-B199AD9C5058}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A8DCB2F2-EFE9-4E62-86A5-B199AD9C5058}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C35A4EC2-D5E9-4563-BD4A-ED1E2342069D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C35A4EC2-D5E9-4563-BD4A-ED1E2342069D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C35A4EC2-D5E9-4563-BD4A-ED1E2342069D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C35A4EC2-D5E9-4563-BD4A-ED1E2342069D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{81670681-0FFC-43AA-A99A-3F83583DF665}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{81670681-0FFC-43AA-A99A-3F83583DF665}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{81670681-0FFC-43AA-A99A-3F83583DF665}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{81670681-0FFC-43AA-A99A-3F83583DF665}.Release|Any CPU.Build.0 = Release|Any CPU
+		{FD6A73D1-6845-40F8-A740-46D825F14335}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{FD6A73D1-6845-40F8-A740-46D825F14335}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{FD6A73D1-6845-40F8-A740-46D825F14335}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{FD6A73D1-6845-40F8-A740-46D825F14335}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{33875102-4921-4C35-B883-08DBA2C328BA} = {A1965262-A00F-4008-A426-00A270DC312F}
+		{A8DCB2F2-EFE9-4E62-86A5-B199AD9C5058} = {1581DDC8-A59D-41B9-9F5C-0FE9CF20CED2}
+		{81670681-0FFC-43AA-A99A-3F83583DF665} = {1581DDC8-A59D-41B9-9F5C-0FE9CF20CED2}
+		{FD6A73D1-6845-40F8-A740-46D825F14335} = {A1965262-A00F-4008-A426-00A270DC312F}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {6D0520B6-EADC-44ED-9E69-D769BA49E267}

@@ -1,10 +1,31 @@
 # Coroutines for WPF
 
-Influenced by coroutines in Unity. Giving the ability to sequentially declare animations and other time sensitive tasks.
+[![Nuget](https://img.shields.io/nuget/v/CoroutinesForWpf.svg)](https://www.nuget.org/packages/CoroutinesForWpf/)
 
-Currently the coroutines are run on the main thread.
+Influenced by coroutines in Unity. Giving the ability to sequentially declare animations and other time dependent tasks.
 
-TODO:
-- [ ] Handle multiple coroutines running simultaneously
-- [ ] Handle code that runs for longer than one frame
-- [ ] ...
+Example code:
+
+```C#
+private void OnClick()
+{
+    var routine = Coroutine.Start(GreetTheWorld());
+
+    // To abort the coroutine, just call Dispose()
+    //routine.Dispose();
+}
+
+private IEnumerator GreetTheWorld()
+{
+    TextBlock1.Text = "Hello ...";
+
+    yield return new WaitForSeconds(2.0);
+
+    TextBlock1.Text = "Hello World!";
+}
+```
+
+More example code can be found in the source code.
+
+* Main WPF example: [CoroutinesForWpf.Example](Source/CoroutinesForWpf.Example/)
+* Custom event pump example: [CoroutinesDotNet.CustomPumpExample](Source/CoroutinesDotNet.CustomPumpExample/)

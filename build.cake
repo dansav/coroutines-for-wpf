@@ -26,137 +26,133 @@ GitVersion version;
 
 Setup(ctx =>
 {
-   // Executed BEFORE the first task.
-   Information("Running tasks...");
+    // Executed BEFORE the first task.
+    Information("Running tasks...");
 
     // workaround to not pick msbuild from VS2019 Preview
     msbuildInstallationPath = VSWhereLatest(new VSWhereLatestSettings { Requires = "Microsoft.Component.MSBuild" });
     msbuildExePath = msbuildInstallationPath.CombineWithFilePath("MSBuild/current/Bin/MSBuild.exe");
 
     version = GitVersion();
-
 });
 
 Teardown(ctx =>
 {
-   // Executed AFTER the last task.
-   Information("Finished running tasks.");
+    // Executed AFTER the last task.
+    Information("Finished running tasks.");
 });
 
 ///////////////////////////////////////////////////////////////////////////////
 // TASKS
 ///////////////////////////////////////////////////////////////////////////////
 
-Task("Restore").Does(()=> 
+Task("Restore").Does(()=>
 {
-   CleanDirectories("**/bin/" + configuration);
-   CleanDirectories("**/obj" + configuration);
+    CleanDirectories("**/bin/" + configuration);
+    CleanDirectories("**/obj" + configuration);
 
-   EnsureDirectoryExists(stageDir);
-   CleanDirectory(stageDir);
-   EnsureDirectoryExists(buildDir);
-   EnsureDirectoryExists(packageDir);
-   EnsureDirectoryExists(publishDir);
+    EnsureDirectoryExists(stageDir);
+    CleanDirectory(stageDir);
+    EnsureDirectoryExists(buildDir);
+    EnsureDirectoryExists(packageDir);
+    EnsureDirectoryExists(publishDir);
 
-   var settings = new NuGetRestoreSettings
-   {
-      PackagesDirectory = sourceDir + Directory("packages"),
-      MSBuildPath = msbuildExePath.GetDirectory()
-   };
+    var settings = new NuGetRestoreSettings
+    {
+        PackagesDirectory = sourceDir + Directory("packages"),
+        MSBuildPath = msbuildExePath.GetDirectory()
+    };
 
-   NuGetRestore(solution, settings);
+    NuGetRestore(solution, settings);
 });
 
-Task("PreBuild").Does(() => 
+Task("PreBuild").Does(() =>
 {
     CreateAssemblyInfo(stageDir + File("AssemblyVersion.generated.cs"), new AssemblyInfoSettings {
         Version = version.MajorMinorPatch,
         FileVersion = version.MajorMinorPatch,
         InformationalVersion = version.InformationalVersion,
     });
-
-
 });
 
-Task("Build").Does(() => 
+Task("Build").Does(() =>
 {
-   var settings = new MSBuildSettings
-   {
-      ToolPath = msbuildExePath,
-      Configuration = configuration,
-   }
-      .WithTarget("Rebuild");
+    var settings = new MSBuildSettings
+    {
+        ToolPath = msbuildExePath,
+        Configuration = configuration,
+    }
+        .WithTarget("Rebuild");
 
-   MSBuild(solution, settings);
+    MSBuild(solution, settings);
 });
 
 Task("Test").Does(() =>
 {
-   NUnit3("./source/**/bin/Release/*.Tests.dll", new NUnit3Settings
-   {
-      //X86 = true,
-      Results = new[]
-      {
-         new NUnit3Result
-         {
-            FileName = stageDir + File("TestResult.xml")
-         }
-      },  
-   });
+    NUnit3($"./source/**/bin/{configuration}/*.Tests.dll", new NUnit3Settings
+    {
+        //X86 = true,
+        Results = new[]
+        {
+            new NUnit3Result
+            {
+                FileName = stageDir + File("TestResult.xml")
+            }
+        },
+    });
 });
 
-Task("Package").Does(() => 
+Task("Package").Does(() =>
 {
-   var libDir = packageDir + Directory("lib/net40");
+    var libDir = packageDir + Directory("lib/net40");
 
-   EnsureDirectoryExists(libDir);
-   CopyFileToDirectory(File("./nuspec/core.nuspec"), packageDir);
+    EnsureDirectoryExists(libDir);
+    CopyFileToDirectory(File("./nuspec/core.nuspec"), packageDir);
 
-   CopyDirectory(sourceDir + Directory("CoroutinesForWpf/bin/" + configuration), libDir);
+    CopyDirectory(sourceDir + Directory("CoroutinesForWpf/bin/" + configuration), libDir);
 
-   var coreSettings = new NuGetPackSettings
-   {
-      Version = version.NuGetVersion,
-      ProjectUrl = new Uri("https://github.com/dansav/coroutines-for-wpf"),
-      License = new NuSpecLicense() { Type = "expression", Value = "MIT" },
-      BasePath = packageDir,
-      OutputDirectory = publishDir
-   };
-   NuGetPack(packageDir + File("core.nuspec"), coreSettings);
+    var coreSettings = new NuGetPackSettings
+    {
+        Version = version.NuGetVersion,
+        ProjectUrl = new Uri("https://github.com/dansav/coroutines-for-wpf"),
+        License = new NuSpecLicense() { Type = "expression", Value = "MIT" },
+        BasePath = packageDir,
+        OutputDirectory = publishDir
+    };
+    NuGetPack(packageDir + File("core.nuspec"), coreSettings);
 });
 
 Task("Publish")
-   .WithCriteria(() => (version.BranchName == "master" || version.BranchName.StartsWith("release/")) && !BuildSystem.IsLocalBuild && !BuildSystem.IsPullRequest)
-   .Does(() => 
+    .WithCriteria(() => (version.BranchName == "master" || version.BranchName.StartsWith("release/")) && !BuildSystem.IsLocalBuild && !BuildSystem.IsPullRequest)
+    .Does(() =>
 {
-   var feedUrl = "https://api.nuget.org/v3/index.json";
-   var package = GetFiles($"{publishDir}/*{version.NuGetVersion}.nupkg").First();
-   
-   if (string.IsNullOrWhiteSpace(EnvironmentVariable("NUGET_API_KEY")))
-   {
-      Information($"Not Pushing the nuget package. Api key is missing!");
-   }
-   else
-   {
-      Information($"Pushing {package} to {feedUrl}");
+    if (string.IsNullOrWhiteSpace(EnvironmentVariable("NUGET_API_KEY")))
+    {
+        Warning($"Not Pushing the nuget package. Api key is missing!");
+        return;
+    }
 
-      var settings = new NuGetPushSettings
-      {
-         Source = feedUrl,
-         ApiKey = EnvironmentVariable("NUGET_API_KEY")
-      };
+    var feedUrl = "https://api.nuget.org/v3/index.json";
+    var package = GetFiles($"{publishDir}/*{version.NuGetVersion}.nupkg").First();
 
-      NuGetPush(package, settings);
-   }
+    Information($"Pushing {package} to {feedUrl}");
+
+    var settings = new NuGetPushSettings
+    {
+        Source = feedUrl,
+        ApiKey = EnvironmentVariable("NUGET_API_KEY")
+    };
+
+    NuGetPush(package, settings);
 });
 
 Task("Default")
-   .IsDependentOn("Restore")
-   .IsDependentOn("PreBuild")
-   .IsDependentOn("Build")
-   //.IsDependentOn("Test")
-   .IsDependentOn("Package")
-   .IsDependentOn("Publish")
-   ;
+    .IsDependentOn("Restore")
+    .IsDependentOn("PreBuild")
+    .IsDependentOn("Build")
+    .IsDependentOn("Test")
+    .IsDependentOn("Package")
+    .IsDependentOn("Publish")
+    ;
 
 RunTarget(target);

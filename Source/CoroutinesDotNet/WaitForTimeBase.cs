@@ -1,21 +1,14 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+using System;
 
-namespace CoroutinesForWpf
+namespace CoroutinesDotNet
 {
-    public class WaitForSeconds : CoroutineBase
+    public abstract class WaitForTimeBase : CoroutineBase
     {
         private readonly TimeSpan _duration;
 
         private DateTimeOffset _targetTime;
 
-        public WaitForSeconds(double durationInSeconds) : this(TimeSpan.FromSeconds(durationInSeconds))
-        {
-        }
-
-        public WaitForSeconds(TimeSpan duration)
+        protected WaitForTimeBase(TimeSpan duration)
         {
             _duration = duration;
         }

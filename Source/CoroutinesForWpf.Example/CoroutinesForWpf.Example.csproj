@@ -98,6 +98,10 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\CoroutinesDotNet\CoroutinesDotNet.csproj">
+      <Project>{C35A4EC2-D5E9-4563-BD4A-ED1E2342069D}</Project>
+      <Name>CoroutinesDotNet</Name>
+    </ProjectReference>
     <ProjectReference Include="..\CoroutinesForWpf\CoroutinesForWpf.csproj">
       <Project>{eca68b1a-6136-4031-8eb8-06d345ea8c64}</Project>
       <Name>CoroutinesForWpf</Name>

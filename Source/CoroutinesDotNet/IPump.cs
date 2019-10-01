@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace CoroutinesForWpf
+namespace CoroutinesDotNet
 {
     public interface IPump : IDisposable
     {
