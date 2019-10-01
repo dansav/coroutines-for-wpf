@@ -4,7 +4,6 @@ using CoroutinesDotNet;
 
 namespace CoroutinesForWpf
 {
-    // alternative public api 1.
     public static class Coroutine
     {
         private static IPump _pump = new WpfEventPump();
@@ -20,17 +19,8 @@ namespace CoroutinesForWpf
         }
     }
 
-    // alternative public api 2.
-    [Obsolete("Use Coroutine.Start instead")]
-    public static class Start
-    {
-        public static IDisposable Coroutine(IEnumerator routine)
-        {
-            return CoroutinesForWpf.Coroutine.Start(routine);
-        }
-    }
-
     // for backwards compatibility
+    // TODO: remove in 0.3 release
     [Obsolete("Use Coroutine.Start instead")]
     public static class Executor
     {
