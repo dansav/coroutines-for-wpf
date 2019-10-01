@@ -17,7 +17,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CoroutinesDotNet.Tests", "C
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Examples", "Examples", "{A1965262-A00F-4008-A426-00A270DC312F}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CoroutinesDotNet.CustomPumpExample", "CoroutinesDotNet.CustomPumpImplementation\CoroutinesDotNet.CustomPumpExample.csproj", "{FD6A73D1-6845-40F8-A740-46D825F14335}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CoroutinesDotNet.CustomPumpExample", "CoroutinesDotNet.CustomPumpExample\CoroutinesDotNet.CustomPumpExample.csproj", "{FD6A73D1-6845-40F8-A740-46D825F14335}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

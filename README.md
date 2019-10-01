@@ -9,7 +9,7 @@ Example code:
 ```C#
 private void OnClick()
 {
-    var routine = Executor.StartCoroutine(GreetTheWorld());
+    var routine = Coroutine.Start(GreetTheWorld());
 
     // To abort the coroutine, just call Dispose()
     //routine.Dispose();
@@ -25,4 +25,7 @@ private IEnumerator GreetTheWorld()
 }
 ```
 
-More example code can be found in the source code. Main example: [CoroutinesForWpf.Example](Source/CoroutinesForWpf.Example/)
+More example code can be found in the source code.
+
+* Main WPF example: [CoroutinesForWpf.Example](Source/CoroutinesForWpf.Example/)
+* Custom event pump example: [CoroutinesDotNet.CustomPumpExample](Source/CoroutinesDotNet.CustomPumpExample/)
