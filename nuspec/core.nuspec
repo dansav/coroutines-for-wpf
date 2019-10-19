@@ -10,10 +10,11 @@
     </description>
     <tags>c# wpf coroutine yield</tags>
     <dependencies>
-      <group targetFramework="net40" />
+      <group targetFramework="net35" />
+      <group targetFramework="netcoreapp3.0" />
     </dependencies>
     <frameworkAssemblies>
-      <frameworkAssembly assemblyName="PresentationCore" targetFramework="net40" />
+      <frameworkAssembly assemblyName="PresentationCore" targetFramework="net35" />
     </frameworkAssemblies>
   </metadata>
 </package>
