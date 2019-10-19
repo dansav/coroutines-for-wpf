@@ -6,7 +6,7 @@
     <owners>dansav</owners>
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
     <description>
-      Influenced by coroutines in Unity. Giving the ability to sequentially declare animations and other time dependent tasks.
+      Influenced by coroutines in Unity3D. Giving the ability to sequentially declare animations and other time dependent tasks.
     </description>
     <tags>c# wpf coroutine yield</tags>
     <dependencies>
