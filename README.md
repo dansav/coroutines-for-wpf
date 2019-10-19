@@ -2,7 +2,7 @@
 
 [![Nuget](https://img.shields.io/nuget/v/CoroutinesForWpf.svg)](https://www.nuget.org/packages/CoroutinesForWpf/)
 
-Influenced by coroutines in Unity. Giving the ability to sequentially declare animations and other time dependent tasks.
+Influenced by coroutines in Unity3D. Giving the ability to sequentially declare animations and other time dependent tasks.
 
 ## Compatibility
 
