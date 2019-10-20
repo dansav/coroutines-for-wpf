@@ -49,7 +49,7 @@ Teardown(ctx =>
 Task("Restore").Does(()=>
 {
     CleanDirectories("**/bin/" + configuration);
-    CleanDirectories("**/obj" + configuration);
+    CleanDirectories("**/obj/" + configuration);
 
     EnsureDirectoryExists(stageDir);
     CleanDirectory(stageDir);

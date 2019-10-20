@@ -2,9 +2,18 @@
 
 [![Nuget](https://img.shields.io/nuget/v/CoroutinesForWpf.svg)](https://www.nuget.org/packages/CoroutinesForWpf/)
 
-Influenced by coroutines in Unity. Giving the ability to sequentially declare animations and other time dependent tasks.
+Influenced by coroutines in Unity3D. Giving the ability to sequentially declare animations and other time dependent tasks.
 
-Example code:
+## Compatibility
+
+The WPF specific parts requires one of:
+
+* .NET Framework 3.5 or later
+* .NET Core 3.0
+
+With a custom event pump, you can use any .NET version compatible with .NET Standard 1.1 or .NET Framework 3.5 or newer.
+
+## Example code
 
 ```C#
 private void OnClick()
