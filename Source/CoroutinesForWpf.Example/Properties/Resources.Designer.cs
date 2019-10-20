@@ -8,7 +8,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace CoroutinesDotNet.Example.Properties {
+namespace CoroutinesForWpf.Example.Properties {
     using System;
     
     

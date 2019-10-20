@@ -8,12 +8,13 @@
     <OutputType>WinExe</OutputType>
     <RootNamespace>CoroutinesForWpf.Example</RootNamespace>
     <AssemblyName>CoroutinesForWpf.Example</AssemblyName>
-    <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <ProjectTypeGuids>{60dc8134-eba5-43b8-bcc9-bb4bc16c2548};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
     <WarningLevel>4</WarningLevel>
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
     <Deterministic>true</Deterministic>
+    <TargetFrameworkProfile />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <PlatformTarget>AnyCPU</PlatformTarget>
@@ -36,16 +37,8 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
-    <Reference Include="System.Data" />
     <Reference Include="System.Xml" />
-    <Reference Include="Microsoft.CSharp" />
     <Reference Include="System.Core" />
-    <Reference Include="System.Xml.Linq" />
-    <Reference Include="System.Data.DataSetExtensions" />
-    <Reference Include="System.Net.Http" />
-    <Reference Include="System.Xaml">
-      <RequiredTargetFramework>4.0</RequiredTargetFramework>
-    </Reference>
     <Reference Include="WindowsBase" />
     <Reference Include="PresentationCore" />
     <Reference Include="PresentationFramework" />
@@ -98,13 +91,13 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\CoroutinesDotNet.Wpf\CoroutinesDotNet.Wpf.csproj">
+      <Project>{B12D96B6-9A2B-4240-803B-3CD1001CF9C1}</Project>
+      <Name>CoroutinesDotNet.Wpf</Name>
+    </ProjectReference>
     <ProjectReference Include="..\CoroutinesDotNet\CoroutinesDotNet.csproj">
       <Project>{C35A4EC2-D5E9-4563-BD4A-ED1E2342069D}</Project>
       <Name>CoroutinesDotNet</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\CoroutinesForWpf\CoroutinesForWpf.csproj">
-      <Project>{eca68b1a-6136-4031-8eb8-06d345ea8c64}</Project>
-      <Name>CoroutinesForWpf</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

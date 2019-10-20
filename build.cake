@@ -49,7 +49,7 @@ Teardown(ctx =>
 Task("Restore").Does(()=>
 {
     CleanDirectories("**/bin/" + configuration);
-    CleanDirectories("**/obj" + configuration);
+    CleanDirectories("**/obj/" + configuration);
 
     EnsureDirectoryExists(stageDir);
     CleanDirectory(stageDir);
@@ -104,12 +104,12 @@ Task("Test").Does(() =>
 
 Task("Package").Does(() =>
 {
-    var libDir = packageDir + Directory("lib/net40");
+    var libDir = packageDir + Directory("lib");
 
     EnsureDirectoryExists(libDir);
     CopyFileToDirectory(File("./nuspec/core.nuspec"), packageDir);
 
-    CopyDirectory(sourceDir + Directory("CoroutinesForWpf/bin/" + configuration), libDir);
+    CopyDirectory(sourceDir + Directory("CoroutinesDotNet.Wpf/bin/" + configuration), libDir);
 
     var coreSettings = new NuGetPackSettings
     {
