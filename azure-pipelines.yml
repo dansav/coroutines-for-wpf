@@ -18,7 +18,7 @@ steps:
 - powershell: ./build.ps1
   displayName: 'Run Cake Build Script'
   env:
-    NUGET_API_KEY: $(dansav.NugetApiKey)
+    NUGET_API_KEY: $(Private.NugetApiKey2020)
 - publish: $(System.DefaultWorkingDirectory)/stage
   artifact: Stage
 - task: PublishTestResults@2
